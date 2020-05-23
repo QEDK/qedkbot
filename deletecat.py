@@ -81,4 +81,3 @@ if(statuspage.text == "on"):
 
 print("Task is complete.")
 exit(0)
-
