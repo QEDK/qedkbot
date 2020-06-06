@@ -65,13 +65,11 @@ for page in emptycats:
             elif cat.isCategoryRedirect():
                 backlinkcount = len(list(cat.backlinks(total=2)))
                 if(backlinkcount == 0) or ((backlinkcount == 1) and (cat.toggleTalkPage().exists())):
-                    editsummary = "Marking category as empty."
-                    cat.text = cat.text+"\n[[Category:Empty categories with no backlinks]]"
-                    cat.save(summary=editsummary+" Contact [[User talk:QEDK|operator]] if any bugs found.")
+                    cat.text = cat.text + "\n[[Category:Empty categories with no backlinks]]"
+                    cat.save(summary="Marking category as empty. Contact [[User talk:QEDK|operator]] if any bugs found.")
             else:
-                cat.text = "{{Db-c1|bot=QEDKbot}}\n"+cat.text
-                editsummary = "Nominating category for deletion ([[WP:CSD#C1]])."
-                cat.save(summary=editsummary+" Contact [[User talk:QEDK|operator]] if any bugs found.")
+                cat.text = "{{Db-c1|bot=QEDKbot}}\n" + cat.text
+                cat.save(summary="Nominating category for deletion ([[WP:CSD#C1]]). Contact [[User talk:QEDK|operator]] if any bugs found.")
                 username = cat.oldest_revision.user
                 if rebot.search(username) is None:
                     usertalk = Page(site, "User talk:" + username)
