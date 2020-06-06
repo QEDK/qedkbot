@@ -7,7 +7,7 @@ import toolforge
 import requests
 import re
 
-toolforge.set_user_agent("qedkbot")
+toolforge.set_user_agent('qedkbot')
 site = pywikibot.Site()
 site.login()
 
@@ -54,6 +54,7 @@ while emptycatcomplete == 0:
 catcontinue = ""
 
 reg = re.compile(r"(with\s+no\s+backlinks|.*-class|needing|cf.\s+full|wikiproject|by\s+(quality|importance))", flags=re.IGNORECASE)
+rebot = re.compile(r"(\bbot|bot\b)", flags=re.IGNORECASE)
 skip = {Page(site, "Template:Possibly empty category"), Page(site, "Template:Monthly clean-up category"), Page(site, "Template:Category disambiguation"), Page(site, "Template:Db-c1"), Page(site, "Template:Cfd full"), Page(site, "Template:Category class"), Page(site, "Template:Maintenance category autotag")}
 for page in emptycats:
     try:
@@ -71,9 +72,11 @@ for page in emptycats:
                 cat.text = "{{Db-c1|bot=QEDKbot}}\n"+cat.text
                 editsummary = "Nominating category for deletion ([[WP:CSD#C1]])."
                 cat.save(summary=editsummary+" Contact [[User talk:QEDK|operator]] if any bugs found.")
-                usertalk = Page(site, "User talk:" + cat.oldest_revision.user)
-                usertalk.text = usertalk.text + "\n{{subst:Db-catempty-notice|"+ page + "}}{{center|{{small|''This message was automatically delivered by [[User:QEDKbot|QEDKbot]]. ~~~~~''}}}}"
-                usertalk.save(summary="Notification for CSD-nominated category.")
+                username = cat.oldest_revision.user
+                if rebot.match(username) is None:
+                    usertalk = Page(site, "User talk:" + username)
+                    usertalk.text = usertalk.text + "\n{{subst:Db-catempty-notice|"+ page + "}}{{center|{{small|''This message was automatically delivered by [[User:QEDKbot|QEDKbot]]. ~~~~~''}}}}"
+                    usertalk.save(summary="Notification for CSD-nominated category.")
     except Exception as e:
         print(str(page), e)
     if((emptycats.index(page)+1) % 50 == 0):
