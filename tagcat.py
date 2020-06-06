@@ -73,7 +73,7 @@ for page in emptycats:
                 editsummary = "Nominating category for deletion ([[WP:CSD#C1]])."
                 cat.save(summary=editsummary+" Contact [[User talk:QEDK|operator]] if any bugs found.")
                 username = cat.oldest_revision.user
-                if rebot.match(username) is None:
+                if rebot.search(username) is None:
                     usertalk = Page(site, "User talk:" + username)
                     usertalk.text = usertalk.text + "\n{{subst:Db-catempty-notice|"+ page + "}}{{center|{{small|''This message was automatically delivered by [[User:QEDKbot|QEDKbot]]. ~~~~~''}}}}"
                     usertalk.save(summary="Notification for CSD-nominated category.")
