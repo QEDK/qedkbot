@@ -7,7 +7,7 @@ import toolforge
 import requests
 import re
 
-toolforge.set_user_agent('qedkbot')
+toolforge.set_user_agent("qedkbot")
 site = pywikibot.Site()
 site.login()
 
@@ -54,7 +54,7 @@ while emptycatcomplete == 0:
 catcontinue = ""
 
 reg = re.compile(r"(with\s+no\s+backlinks|.*-class|needing|cf.\s+full|wikiproject|by\s+(quality|importance))", flags=re.IGNORECASE)
-skip = {Page(site, "Template:Possibly empty category"), Page(site, "Template:Monthly clean-up category"), Page(site, "Template:Category disambiguation"), Page(site, "Template:Db-c1"), Page(site, "Template:Cfd full"), Page(site, "Template:Category class")}
+skip = {Page(site, "Template:Possibly empty category"), Page(site, "Template:Monthly clean-up category"), Page(site, "Template:Category disambiguation"), Page(site, "Template:Db-c1"), Page(site, "Template:Cfd full"), Page(site, "Template:Category class"), Page(site, "Template:Maintenance category autotag")}
 for page in emptycats:
     try:
         cat = pywikibot.page.Category(site, page)
@@ -85,4 +85,3 @@ if(statuspage.text == "on"):
     
 print("Task is complete.")
 exit(0)
-
