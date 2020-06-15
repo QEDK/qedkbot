@@ -54,7 +54,7 @@ while emptycatcomplete == 0:
         emptycatcomplete = 1
 catcontinue = ""
 
-reg = re.compile(r"(with\s+no\s+backlinks|-class|importance|needing|cf.\s+full|wikiproject|quality|unassessed|featured\s+stopic)", flags=re.IGNORECASE)
+reg = re.compile(r"(with\s+no\s+backlinks|-class|importance|needing|cf.\s+full|wikiproject|quality|unassessed|featured\s+topic)", flags=re.IGNORECASE)
 rebot = re.compile(r"(\bbot|bot\b)", flags=re.IGNORECASE)
 skip = {Page(site, "Template:Possibly empty category"), Page(site, "Template:Monthly clean-up category"), Page(site, "Template:Category disambiguation"), Page(site, "Template:Db-c1"), Page(site, "Template:Cfd full"), Page(site, "Template:Category class"), Page(site, "Template:Maintenance category autotag")}
 for page in emptycats:
