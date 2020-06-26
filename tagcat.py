@@ -54,9 +54,11 @@ while emptycatcomplete == 0:
         emptycatcomplete = 1
 catcontinue = ""
 
-reg = re.compile(r"(with\s+no\s+backlinks|-class|importance|needing|cf.\s+full|wikiproject|quality|unassessed|featured\s+topic)", flags=re.IGNORECASE)
+reg = re.compile(r"(with\s+no\s+backlinks|-class|importance|needing|cf.*full|wikiproject|quality|unassessed|featured\s+topic)", flags=re.IGNORECASE)
 rebot = re.compile(r"(\bbot|bot\b)", flags=re.IGNORECASE)
 skip = {Page(site, "Template:Possibly empty category"), Page(site, "Template:Monthly clean-up category"), Page(site, "Template:Category disambiguation"), Page(site, "Template:Db-c1"), Page(site, "Template:Cfd full"), Page(site, "Template:Category class"), Page(site, "Template:Maintenance category autotag")}
+log = Page(site, "User:QEDKbot/Catlog")
+log.text = ""
 for page in emptycats:
     try:
         cat = pywikibot.page.Category(site, page)
@@ -76,6 +78,8 @@ for page in emptycats:
                     usertalk = Page(site, "User talk:" + username)
                     usertalk.text = usertalk.text + "\n{{subst:Db-catempty-notice|"+ page + "}}{{center|{{small|''This message was automatically delivered by [[User:QEDKbot|QEDKbot]]. ~~~~~''}}}}"
                     usertalk.save(summary="Notification for CSD-nominated category.")
+                log.text += "* Nominating " + cat.title + " for deletion.\n"
+                log.save(summary="Logging in userspace")
     except Exception as e:
         print(str(page), e)
     if((emptycats.index(page)+1) % 50 == 0):
@@ -87,3 +91,4 @@ if(statuspage.text == "on"):
     
 print("Task is complete.")
 exit(0)
+
